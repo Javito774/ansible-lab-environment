@@ -1,0 +1,6 @@
+---
+- name: Playbook de prueba de conectividad
+  hosts: all
+  tasks:
+    - name: Verificar conectividad con los hosts
+      ping:

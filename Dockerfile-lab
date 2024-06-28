@@ -1,0 +1,26 @@
+FROM ubuntu:latest
+
+# Establece las variables de entorno necesarias
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Actualiza los paquetes del sistema e instala SSH y sudo
+RUN apt-get update && \
+    apt-get install -y openssh-server sudo && \
+    apt-get clean
+
+# Crea un usuario y establece una contraseña
+RUN useradd -ms /bin/bash ansible && \
+    echo 'ansible:ansible' | chpasswd && \
+    usermod -aG sudo ansible
+
+# Configura SSH para permitir acceso con contraseña
+RUN mkdir /var/run/sshd && \
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+
+# Expone el puerto SSH
+EXPOSE 22
+
+# Inicia el servicio SSH
+CMD service ssh start && tail -f /dev/null
+

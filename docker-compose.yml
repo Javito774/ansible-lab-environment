@@ -1,0 +1,44 @@
+services:
+  ansible-admin:
+    container_name: ansible-admin
+    volumes:
+      - ./ansible:/ansible
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - lab1
+      - lab2
+      - lab3
+      - lab4
+      - lab5
+
+  lab1:
+    build:
+      context: .
+      dockerfile: Dockerfile-lab
+    container_name: lab1
+
+  lab2:
+    build:
+      context: .
+      dockerfile: Dockerfile-lab
+    container_name: lab2
+
+  lab3:
+    build:
+      context: .
+      dockerfile: Dockerfile-lab
+    container_name: lab3
+
+  lab4:
+    build:
+      context: .
+      dockerfile: Dockerfile-lab
+    container_name: lab4
+
+  lab5:
+    build:
+      context: .
+      dockerfile: Dockerfile-lab
+    container_name: lab5
